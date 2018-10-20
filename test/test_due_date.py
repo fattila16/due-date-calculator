@@ -6,7 +6,7 @@ from src.strategy.emar_due_date_strategy import EmarDueDateStrategy
 
 class TestDueDate(TestCase):
     def setUp(self):
-        self.due_date = EmarDueDateStrategy(None, 9, 17)
+        self.due_date = EmarDueDateStrategy(9, 17)
         self.test_date = dt.datetime(2018, 10, 18, 12, 50)
         self.test_turnaround_hours = 6
 
@@ -39,7 +39,7 @@ class TestDueDate(TestCase):
 
     def test_remaining_hours(self):
         test_date = dt.datetime(2018, 10, 18, 16, 0, 0)
-        result = self.due_date.remaining_working_hours(test_date)
+        result = self.due_date.remaining_working_hours_in_sec(test_date)
         self.assertEqual(3600, result)
 
     def test_add_one_work_day(self):

@@ -5,7 +5,7 @@ class DueDate:
         self.start_hour = start_hour
         self.end_hour = end_hour
         if not strategy:
-            strategy = EmarDueDateStrategy(None, self.start_hour, self.end_hour)
+            strategy = EmarDueDateStrategy(self.start_hour, self.end_hour)
         self.strategy = strategy
 
     def calculate_due_date(self, submit_date, turnaround_hours):
