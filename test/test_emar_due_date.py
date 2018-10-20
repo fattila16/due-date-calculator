@@ -71,6 +71,12 @@ class TestDueDate(TestCase):
         result = self.due_date.calculate_due_date(test_date, test_turnaround_hours)
         self.assertEqual(dt.datetime(2018, 10, 29, 9, 30), result)
 
+    def test_for_0_turnaround_hours(self):
+        test_date = dt.datetime(2018, 10, 22, 9, 30, 0)
+        test_turnaround_hours = 0
+        result = self.due_date.calculate_due_date(test_date, test_turnaround_hours)
+        self.assertEqual(dt.datetime(2018, 10, 22, 9, 30), result)
+
     def test_add_a_day(self):
         test_date = dt.datetime(2018, 10, 22, 15, 30, 0)
         result = EmarDueDateStrategy.add_days(test_date)
