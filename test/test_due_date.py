@@ -42,10 +42,10 @@ class TestDueDate(TestCase):
         result = self.due_date.remaining_working_hours_in_sec(test_date)
         self.assertEqual(3600, result)
 
-    def test_add_one_work_day(self):
-        test_date = dt.datetime(2018, 10, 18, 15, 30, 0)
+    def test_next_valid_work_day(self):
+        test_date = dt.datetime(2018, 10, 19, 15, 30, 0)
         result = self.due_date.next_valid_work_day(test_date)
-        self.assertEqual(dt.datetime(2018, 10, 19, 9, 0, 0), result)
+        self.assertEqual(dt.datetime(2018, 10, 22, 9, 0, 0), result)
 
     def test_for_friday_2_days(self):
         test_date = dt.datetime(2018, 10, 18, 15, 30, 0)
@@ -58,3 +58,20 @@ class TestDueDate(TestCase):
         test_turnaround_hours = 16
         result = self.due_date.calculate_due_date(test_date, test_turnaround_hours)
         self.assertEqual(dt.datetime(2018, 10, 24, 15, 30), result)
+
+    def test_for_same_day(self):
+        test_date = dt.datetime(2018, 10, 22, 12, 30, 0)
+        test_turnaround_hours = 4
+        result = self.due_date.calculate_due_date(test_date, test_turnaround_hours)
+        self.assertEqual(dt.datetime(2018, 10, 22, 16, 30), result)
+
+    def test_for_week_long(self):
+        test_date = dt.datetime(2018, 10, 22, 9, 30, 0)
+        test_turnaround_hours = 40
+        result = self.due_date.calculate_due_date(test_date, test_turnaround_hours)
+        self.assertEqual(dt.datetime(2018, 10, 29, 9, 30), result)
+
+    def test_add_a_day(self):
+        test_date = dt.datetime(2018, 10, 22, 15, 30, 0)
+        result = EmarDueDateStrategy.add_days(test_date)
+        self.assertEqual(dt.datetime(2018, 10, 23, 15, 30), result)
